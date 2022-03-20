@@ -80,4 +80,21 @@ function traceback(paths, x)
     return pth
 end
 
+function treeshape!(p, tree, lay; ϵ=0.02, kwargs...)
+    function walk(n)
+        xs, ys = lay[id(n)]
+        plot!(p, 
+              Shape([xs[1],xs[1],xs[end],xs[end]], [ys[1],ys[end],ys[end],ys[1]]); kwargs...)
+        if !isleaf(n) 
+            for c in children(n)
+                x1, x2, y = walk(c)
+                plot!(p, Shape([xs[1],xs[end],x2,x1], [ys[1]+ϵ,ys[1]+ϵ,y-ϵ,y-ϵ]); kwargs...)
+            end
+        end
+        return xs[1], xs[end], ys[end] 
+    end
+    walk(tree)
+end
+
+
 end
