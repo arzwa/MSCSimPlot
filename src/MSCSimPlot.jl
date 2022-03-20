@@ -18,7 +18,8 @@ function msc_layout(tree, Ns, pad=5)
             x2, y2 = walk(n[2])
             N = Ns[id(n)]
             t = Int(distance(n))
-            x = x1[end] - (N÷2)
+            xmid = (x2[end] + x1[1]) ÷ 2
+            x = xmid - (N÷2)
             y = y1[end] + 1
             coord[id(n)] = (x:(x+N), y:(y+t-1))
         end
